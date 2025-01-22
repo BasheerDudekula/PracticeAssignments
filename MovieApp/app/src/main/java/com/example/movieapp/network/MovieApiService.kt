@@ -8,9 +8,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 const val BASE_URL = "https://api.themoviedb.org/3/"
+
 interface MovieApiService {
+
     @GET("movie/popular")
-    fun getPopularMovies(@Query("api_key")apiKey:String): Call<MovieResponse>
+    fun getPopularMovies(@Query("api_key") apiKey: String): Call<MovieResponse>
 
     companion object {
         fun create(): MovieApiService {
@@ -21,5 +23,4 @@ interface MovieApiService {
             return retrofit.create(MovieApiService::class.java)
         }
     }
-
 }

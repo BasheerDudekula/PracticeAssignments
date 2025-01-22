@@ -34,21 +34,30 @@ class MovieListFragment : Fragment() {
     }
 
     private fun fetchMovies() {
-        movieApi.getPopularMovies("your_api_key").enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                if (response.isSuccessful) {
-                    val movies = response.body()?.results ?: emptyList()
-                    recyclerView.adapter = MovieAdapter(movies) { selectedMovie ->
-                        val action = MovieListFragmentDirections
-                            .actionMovieListFragmentToMovieDetailFragment(selectedMovie)
-                        findNavController().navigate(R.id.action_movieListFragment_to_movieDetailsFragment)
+        movieApi.getPopularMovies("8e3cc2feab2aad37e9370971ba1b4821")
+            .enqueue(object : Callback<MovieResponse> {
+                override fun onResponse(
+                    call: Call<MovieResponse>,
+                    response: Response<MovieResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val movies = response.body()?.results ?: emptyList()
+
+                        //  recyclerView.adapter=MovieAdapter(movies)
+                        recyclerView.adapter = MovieAdapter(movies) { selectedMovie ->
+                            val action = MovieListFragmentDirections
+                                .actionMovieListFragmentToMovieDetailFragment(selectedMovie)
+                            recyclerView.adapter?.notifyDataSetChanged()
+                            findNavController().navigate(action)
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to fetch movies", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                    Toast.makeText(requireContext(), "Failed to fetch movies", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
     }
+
 }

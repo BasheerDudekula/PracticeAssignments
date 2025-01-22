@@ -1,5 +1,6 @@
 package com.example.movieapp.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        Log.d("position positionpositionposition", position.toString())
         holder.bind(movies[position])
     }
 

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id ("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -34,11 +35,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildscript {
-        dependencies {
-            classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.6.0")
-        }
-    }
 }
 
 dependencies {
@@ -53,9 +49,9 @@ dependencies {
     implementation ("com.google.android.material:material:1.9.0")
     implementation ("androidx.recyclerview:recyclerview:1.3.1")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     implementation(libs.androidx.activity)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
