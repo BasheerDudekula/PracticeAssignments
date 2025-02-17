@@ -37,8 +37,7 @@ struct ContentView: View {
                     }
                     .sheet(isPresented: $showRegistrationView) {
                         RegistrationView(onRegistrationSuccess: { user in
-                            currentUser = user
-                            isLoggedIn = true
+                            showRegistrationView = false
                         })
                     }
                 }
