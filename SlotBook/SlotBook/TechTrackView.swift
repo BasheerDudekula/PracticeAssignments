@@ -15,10 +15,10 @@ struct TechTrackView: View {
 
     @Environment(\.managedObjectContext) private var viewContext
 
-    @Binding var isAuthenticated: Bool // Use binding for logout
+    @Binding var isAuthenticated: Bool
 
-    @State private var newTechTrackName = "" // State to hold new tech track name
-    @State private var showError = false // Show error if tech track name is empty
+    @State private var newTechTrackName = ""
+    @State private var showError = false
 
     var body: some View {
         NavigationView {
@@ -29,10 +29,10 @@ struct TechTrackView: View {
                         NavigationLink(destination: SlotListView(techTrack: techTrack)) {
                             Text(techTrack.name ?? "Unknown Tech Track")
                         }
-                        // Swipe actions for each tech track
+                        
                         .swipeActions {
                             Button(role: .destructive) {
-                                deleteTechTrack(techTrack) // Updated to delete TechTrack
+                                deleteTechTrack(techTrack)
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
@@ -40,7 +40,6 @@ struct TechTrackView: View {
                     }
                 }
 
-                // TextField for adding new Tech Track
                 TextField("Enter New Tech Track", text: $newTechTrackName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
@@ -52,7 +51,7 @@ struct TechTrackView: View {
                 }
 
                 Button("Add Tech Track") {
-                    addTechTrack() // Call function to add new tech track
+                    addTechTrack()
                 }
                 .buttonStyle(.borderedProminent)
                 .padding()
@@ -60,7 +59,7 @@ struct TechTrackView: View {
                 Spacer()
 
                 Button("Logout") {
-                    isAuthenticated = false // Simulate logout
+                    isAuthenticated = false
                 }
                 .buttonStyle(.bordered)
                 .padding()
@@ -72,23 +71,22 @@ struct TechTrackView: View {
     // Add new Tech Track
     private func addTechTrack() {
         if newTechTrackName.isEmpty {
-            showError = true // Show error if input is empty
+            showError = true
         } else {
             let newTechTrack = TechTrack(context: viewContext)
             newTechTrack.name = newTechTrackName
             saveContext()
-            newTechTrackName = "" // Clear input after adding
-            showError = false // Clear error after successful addition
+            newTechTrackName = ""
+            showError = false
         }
     }
 
     // Delete Tech Track
     private func deleteTechTrack(_ techTrack: TechTrack) {
         viewContext.delete(techTrack)
-        saveContext() // Save after deletion
+        saveContext()
     }
 
-    // Save context to persist changes in Core Data
     private func saveContext() {
         do {
             try viewContext.save()

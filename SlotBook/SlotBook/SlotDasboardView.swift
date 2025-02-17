@@ -20,7 +20,7 @@ struct SlotDashboardView: View {
     var selectedTechTrack: TechTrack
 
     @State private var newSlotDate = Date()
-    @State private var editingSlot: Slot? // To track the slot being edited
+    @State private var editingSlot: Slot?
 
     var body: some View {
         NavigationView {
@@ -36,7 +36,7 @@ struct SlotDashboardView: View {
                             Spacer()
                             Button("Edit") {
                                 editingSlot = slot
-                                newSlotDate = slot.date ?? Date() // Set date for editing
+                                newSlotDate = slot.date ?? Date()
                             }
                             .foregroundColor(.blue)
 
@@ -52,7 +52,7 @@ struct SlotDashboardView: View {
                     .datePickerStyle(GraphicalDatePickerStyle())
                     .padding()
 
-                // Add or Update Slot based on editing state
+            
                 if editingSlot == nil {
                     Button("Add Slot") {
                         addSlot()
@@ -70,7 +70,7 @@ struct SlotDashboardView: View {
                 Spacer()
 
                 Button("Logout") {
-                    isAuthenticated = false // Simulate logout
+                    isAuthenticated = false
                     presentationMode.wrappedValue.dismiss()
                 }
                 .buttonStyle(.bordered)
@@ -87,31 +87,28 @@ struct SlotDashboardView: View {
         }
     }
 
-    // Add Slot Function
     private func addSlot() {
         let newSlot = Slot(context: viewContext)
         newSlot.date = newSlotDate
-        newSlot.techTrack = selectedTechTrack // Associate the new slot with the selected tech track
+        newSlot.techTrack = selectedTechTrack
 
         saveContext()
     }
 
-    // Update Slot Function
+    
     private func updateSlot() {
         if let slot = editingSlot {
-            slot.date = newSlotDate // Update the date of the selected slot
+            slot.date = newSlotDate
             saveContext()
-            editingSlot = nil // Clear the editing state
+            editingSlot = nil
         }
     }
 
-    // Remove Slot Function
     private func removeSlot(_ slot: Slot) {
         viewContext.delete(slot)
         saveContext()
     }
 
-    // Save Core Data Context
     private func saveContext() {
         do {
             try viewContext.save()

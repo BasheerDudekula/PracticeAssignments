@@ -60,7 +60,6 @@ struct SlotListView: View {
         }
     }
 
-    // Date Formatter
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

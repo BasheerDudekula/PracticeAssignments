@@ -12,14 +12,14 @@ struct LoginView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(entity: User.entity(), sortDescriptors: []) private var users: FetchedResults<User>
 
-    @State private var username = ""
+    @State private var email = ""
     @State private var password = ""
     @State private var isAuthenticated = false
-    @State private var showError = false // To track login errors
+    @State private var showError = false
 
     var body: some View {
         if isAuthenticated {
-            TechTrackView(isAuthenticated: $isAuthenticated) // Redirect to dashboard with binding
+            TechTrackView(isAuthenticated: $isAuthenticated)
         } else {
             NavigationView {
                 VStack {
@@ -27,7 +27,7 @@ struct LoginView: View {
                         .font(.largeTitle)
                         .padding()
 
-                    TextField("Username", text: $username)
+                    TextField("email", text: $email)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
 
@@ -35,14 +35,13 @@ struct LoginView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
 
-                    // Show error message if login fails
                     if showError {
                         Text("Invalid username or password!")
                             .foregroundColor(.red)
                     }
 
                     Button("Login") {
-                        authenticateUser(username: username, password: password)
+                        authenticateUser(username: email, password: password)
                     }
                     .buttonStyle(.borderedProminent)
                     .padding()
@@ -55,7 +54,7 @@ struct LoginView: View {
     }
 
     private func authenticateUser(username: String, password: String) {
-        if let user = users.first(where: { $0.username == username && $0.password == password }) {
+        if users.first(where: { $0.email == email && $0.password == password }) != nil {
             // Successful login
             isAuthenticated = true
             showError = false // Clear error if login is successful

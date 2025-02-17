@@ -9,7 +9,8 @@ import SwiftUI
 
 struct RegisterView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @State private var username = ""
+    @State private var name = ""
+    @State private var email = ""
     @State private var password = ""
     @State private var registrationSuccess = false
 
@@ -19,10 +20,14 @@ struct RegisterView: View {
                 .font(.largeTitle)
                 .padding()
 
-            TextField("Username", text: $username)
+            TextField("Username", text: $name)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-
+            
+            TextField("Email", text: $email)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
             SecureField("Password", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
@@ -43,7 +48,8 @@ struct RegisterView: View {
 
     private func registerUser() {
         let newUser = User(context: viewContext)
-        newUser.username = username
+        newUser.name = name
+        newUser.email = email
         newUser.password = password
 
         do {

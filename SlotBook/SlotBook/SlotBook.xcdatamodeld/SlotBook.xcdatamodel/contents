@@ -9,7 +9,8 @@
         <relationship name="slots" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Slot" inverseName="techTrack" inverseEntity="Slot" spotlightIndexingEnabled="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="password" optional="YES" attributeType="String"/>
-        <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
 </model>
